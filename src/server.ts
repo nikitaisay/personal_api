@@ -1,19 +1,14 @@
-import express from 'express';
 import dotenv from 'dotenv';
-
-import TelegramService from './services/telegram';
 
 dotenv.config();
 
+import express from 'express';
+import bodyParser from 'body-parser';
+import contentfulRouter from './routes/contentful';
+
 const app = express();
 
-app.listen(8000, async () => {
-  const telegram = new TelegramService({
-    apiId: parseFloat(process.env.TELEGRAM_API_ID),
-    apiHash: process.env.TELEGRAM_API_HASH,
-    phoneNumber: process.env.TELEGRAM_PHONE_NUMBER,
-  });
+app.use(bodyParser.json());
+app.use('/contentful', contentfulRouter);
 
-  // const channel = await telegram.getChannelByUsername('nkt_isay');
-  // console.log(channel);
-});
+app.listen(8000);

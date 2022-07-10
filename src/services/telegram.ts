@@ -8,6 +8,12 @@ type TelegramServiceConfig = {
   phoneNumber: string;
 };
 
+type SendMessageOptions = {
+  username: string; 
+  noWebpage: boolean; 
+  message: string;
+}
+
 class TelegramService {
   readonly client: TelegramClient;
   private session: StringSession;
@@ -24,25 +30,32 @@ class TelegramService {
         connectionRetries: 5,
       },
     );
-    (async () => await this.checkAuthSession(config.phoneNumber))();
+    (async () => await this.init(this.phoneNumber))();
   }
 
-  async checkAuthSession(phoneNumber: string): Promise<void> {
-    if (!this.client.session) {
-      await this.client.start({
-        phoneNumber,
-        phoneCode: async () => await input.text('phoneCode ?'),
-        onError: (err) => console.log(err),
-      });
-      this.client.session.save();
-    }
+  async init(phoneNumber: string): Promise<void> {
+    await this.client.start({
+      phoneNumber,
+      phoneCode: async () => await input.text('phoneCode?: '),
+      onError: (err) => console.log(err),
+    });
+    this.client.session.save();
   }
 
   async getChannelByUsername(username: string): Promise<Api.messages.ChatFull> {
-    await this.checkAuthSession(this.phoneNumber);
     return await this.client.invoke(
       new Api.channels.GetFullChannel({
         channel: username,
+      }),
+    );
+  }
+
+  async sendMessage(options: SendMessageOptions): Promise<Api.TypeUpdates> {
+    return await this.client.invoke(
+      new Api.messages.SendMessage({
+        peer: options.username,
+        message: options.message,
+        noWebpage: options.noWebpage,
       }),
     );
   }
