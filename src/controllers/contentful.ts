@@ -11,8 +11,11 @@ const telegram = new TelegramService({
 class ContentfulController {
   async sendArticlePreviewToTelegram(req: Request, res: Response) {
     const fields = req.body.fields;
+
     const message = 
-      `${fields.title['en-US']}\n \n ${fields.description['en-US']}\n \n Reed on ${process.env.WEBSITE_URL}/articles/${fields.articleId['en-US']}`;
+      `${fields.title['en-US']}
+      \n${fields.description['en-US']}
+      \nRead on ${process.env.WEBSITE_URL}/articles/${fields.articleId['en-US']}`;
 
     const response = await telegram.sendMessage({
       message,
