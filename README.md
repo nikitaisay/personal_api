@@ -11,3 +11,8 @@ After you will have all required variables, you can run it simply by run this co
 npm install
 npm start
 ```
+Also, if you would like to check Contentful webhooks functional localy, you will need to download
+and install ngrok client and use, simply by run:
+```
+ngrok http {{YOUR_SERVER_PORT}}
+```
