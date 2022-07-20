@@ -9,8 +9,8 @@ type TelegramServiceConfig = {
 };
 
 type SendMessageOptions = {
-  username: string; 
-  noWebpage: boolean; 
+  username: string;
+  noWebpage: boolean;
   message: string;
 }
 
@@ -40,14 +40,6 @@ class TelegramService {
       onError: (err) => console.log(err),
     });
     this.client.session.save();
-  }
-
-  async getChannelByUsername(username: string): Promise<Api.messages.ChatFull> {
-    return await this.client.invoke(
-      new Api.channels.GetFullChannel({
-        channel: username,
-      }),
-    );
   }
 
   async sendMessage(options: SendMessageOptions): Promise<Api.TypeUpdates> {

@@ -12,8 +12,6 @@ class ContentfulController {
   async sendArticlePreviewToTelegram(req: Request, res: Response) {
     const fields = req.body.fields;
 
-    console.log(req)
-
     const message = 
       `${fields.title['en-US']}
       \n${fields.description['en-US']}

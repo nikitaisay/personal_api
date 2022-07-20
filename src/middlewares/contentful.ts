@@ -4,23 +4,23 @@ export const validateArticlePreview = (req: Request, res: Response, next: NextFu
   const rules = [
     {
       mustHave: req.body?.fields,
-      message: 'Fields are required'
+      message: 'Fields are required',
     },
     {
       mustHave: req.body?.fields?.articleId['en-US'],
-      message: 'articleId is required'
+      message: 'articleId is required',
     },
     {
       mustHave: req.body?.fields?.title['en-US'],
-      message: 'title is required'
+      message: 'title is required',
     },
     {
       mustHave: req.body?.fields?.description['en-US'],
-      message: 'description is required'
+      message: 'description is required',
     },
     {
       mustHave: req.body?.fields?.image['en-US']?.sys?.id,
-      message: 'image id is required'
+      message: 'image id is required',
     },
   ];
 
@@ -28,7 +28,7 @@ export const validateArticlePreview = (req: Request, res: Response, next: NextFu
     if (!rule.mustHave) {
       res.status(400).send({
         status: 400,
-        message: rule.message
+        message: rule.message,
       });
     }
   });

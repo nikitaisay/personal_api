@@ -8,7 +8,7 @@ import contentfulRouter from './routes/contentful';
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/*' }));
 app.use('/contentful', contentfulRouter);
 
 app.listen(8000);
